@@ -36,7 +36,7 @@ def dashboard(request):
 
 @login_required
 def medications_placeholder(request):
-    return render(request, 'accounts/dashboard.html', {'active_page': 'medications'})
+    return redirect('medications:add')
 
 
 @login_required
