@@ -1,7 +1,14 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth import authenticate, get_user_model
 from django.test import Client, TestCase
 from django.urls import reverse
 
+User = get_user_model()
+user, created = User.objects.get_or_create(username="test")
+user.set_password("123")
+user.is_active = True
+user.save()
+
+print(authenticate(username="test", password="123"))
 
 class RegistrationTests(TestCase):
     def setUp(self):

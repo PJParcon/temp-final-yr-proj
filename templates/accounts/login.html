@@ -1,18 +1,29 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Log in | Trackly</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
-<body>
-    <main>
+<body class="login-page">
+    <main class="login-panel">
+        <a class="login-brand" href="{% url 'home' %}">Trackly</a>
         <h1>Log in</h1>
+        <p class="profile-intro">Welcome back. Log in to your account.</p>
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            <div class="login-errors" role="alert">{{ form.non_field_errors }}</div>
+            {% for field in form %}
+                <div class="profile-field">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {{ field.errors }}
+                </div>
+            {% endfor %}
             <input type="hidden" name="next" value="{{ next }}">
-            <button type="submit">Log in</button>
+            <button class="login-submit" type="submit">Log in</button>
         </form>
         <p>Need an account? <a href="{% url 'accounts:register' %}">Create an account</a></p>
     </main>

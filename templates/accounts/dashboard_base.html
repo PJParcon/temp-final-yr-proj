@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{{ active_page|capfirst }}{% endblock %} | Trackly</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body class="dashboard-page">
+    <a class="dashboard-skip" href="#dashboard-content">Skip to content</a>
+    <div class="dashboard-layout">
+        <aside class="dashboard-sidebar">
+            <a class="dashboard-brand" href="{% url 'accounts:dashboard' %}">Trackly</a>
+            <nav class="dashboard-nav" aria-label="Main navigation">
+                <a href="{% url 'accounts:dashboard' %}" {% if active_page == 'dashboard' %}aria-current="page"{% endif %}>
+                    <img class="dashboard-icon" src="{% static 'icons/dashboard.png' %}" alt="" width="24" height="24"> Dashboard
+                </a>
+                <a href="{% url 'accounts:medications' %}" {% if active_page == 'medications' %}aria-current="page"{% endif %}>
+                    <img class="dashboard-icon" src="{% static 'icons/medications.png' %}" alt="" width="24" height="24"> Medications
+                </a>
+                <a href="{% url 'accounts:schedule' %}" {% if active_page == 'schedule' %}aria-current="page"{% endif %}>
+                    <img class="dashboard-icon" src="{% static 'icons/schedule.png' %}" alt="" width="24" height="24"> Schedule
+                </a>
+                <a href="{% url 'accounts:profile' %}" {% if request.resolver_match.url_name == 'profile' %}aria-current="page"{% endif %}>
+                    <img class="dashboard-icon" src="{% static 'icons/settings.png' %}" alt="" width="24" height="24"> Settings
+                </a>
+            </nav>
+            <form class="sidebar-logout" method="post" action="{% url 'accounts:logout' %}">
+                {% csrf_token %}
+                <button type="submit">Log out</button>
+            </form>
+        </aside>
+        <main class="dashboard-content" id="dashboard-content" tabindex="-1" aria-label="{% block content_label %}{{ active_page|capfirst }}{% endblock %}">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>

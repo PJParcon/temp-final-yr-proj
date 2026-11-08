@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import logout
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_http_methods
@@ -14,8 +14,9 @@ def home(request):
 def register(request):
     form = RegistrationForm(request.POST if request.method == 'POST' else None)
     if request.method == 'POST' and form.is_valid():
-        form.save()
-        return redirect('accounts:registration_complete')
+        user = form.save()
+        login(request, user)
+        return redirect('accounts:dashboard')
     return render(request, 'accounts/register.html', {'form': form})
 
 
@@ -26,6 +27,21 @@ def registration_complete(request):
 @login_required
 def profile(request):
     return render(request, 'accounts/profile.html')
+
+
+@login_required
+def dashboard(request):
+    return render(request, 'accounts/dashboard.html', {'active_page': 'dashboard'})
+
+
+@login_required
+def medications_placeholder(request):
+    return render(request, 'accounts/dashboard.html', {'active_page': 'medications'})
+
+
+@login_required
+def schedule_placeholder(request):
+    return render(request, 'accounts/dashboard.html', {'active_page': 'schedule'})
 
 
 @login_required

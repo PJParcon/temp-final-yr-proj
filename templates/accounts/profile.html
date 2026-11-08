@@ -1,29 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>My profile | Trackly</title>
-</head>
-<body>
-    <main>
+{% extends 'accounts/dashboard_base.html' %}
+{% block title %}My profile{% endblock %}
+{% block content_label %}Settings{% endblock %}
+{% block content %}
+    <div class="dashboard-profile">
         <h1>My profile</h1>
         {% for message in messages %}
             <p role="status">{{ message }}</p>
         {% endfor %}
-        <dl>
-            <dt>Username</dt><dd>{{ request.user.username }}</dd>
-            <dt>First name</dt><dd>{{ request.user.first_name|default:'Not provided' }}</dd>
-            <dt>Last name</dt><dd>{{ request.user.last_name|default:'Not provided' }}</dd>
-            <dt>Email</dt><dd>{{ request.user.email|default:'Not provided' }}</dd>
-        </dl>
-        <p><a href="{% url 'accounts:profile_update' %}">Update username</a></p>
-        <p><a href="{% url 'accounts:password_change' %}">Change password</a></p>
-        <p><a href="{% url 'accounts:account_delete' %}">Delete account</a></p>
-        <form method="post" action="{% url 'accounts:logout' %}">
-            {% csrf_token %}
-            <button type="submit">Log out</button>
-        </form>
-    </main>
-</body>
-</html>
+        <p class="profile-intro">Your personal account details.</p>
+        <div class="profile-name-row">
+            <div class="profile-field">
+                <label for="profile-first-name">First name</label>
+                <input id="profile-first-name" value="{{ request.user.first_name }}" placeholder="Not provided" readonly>
+            </div>
+            <div class="profile-field">
+                <label for="profile-last-name">Last name</label>
+                <input id="profile-last-name" value="{{ request.user.last_name }}" placeholder="Not provided" readonly>
+            </div>
+        </div>
+        <div class="profile-field">
+            <label for="profile-username">Username</label>
+            <input id="profile-username" value="{{ request.user.username }}" readonly>
+        </div>
+        <div class="profile-field">
+            <label for="profile-email">Email</label>
+            <input id="profile-email" value="{{ request.user.email }}" placeholder="Not provided" readonly>
+        </div>
+        <div class="profile-actions">
+            <a class="profile-primary" href="{% url 'accounts:profile_update' %}">Update username</a>
+            <a class="profile-primary" href="{% url 'accounts:password_change' %}">Change password</a>
+        </div>
+        <a class="profile-primary profile-delete" href="{% url 'accounts:account_delete' %}">Delete account</a>
+    </div>
+{% endblock %}
