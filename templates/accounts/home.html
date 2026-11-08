@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome | Trackly</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>Trackly</header>
+    <main>
+        {% for message in messages %}
+            <p role="status">{{ message }}</p>
+        {% endfor %}
+        <section aria-labelledby="welcome-title">
+            <p class="eyebrow">Your patient account</p>
+            <h1 id="welcome-title">Welcome to your Smart Medication Manager</h1>
+            {% if user.is_authenticated %}
+                <p>You’re signed in as <strong>{{ user.username }}</strong>.</p>
+                <a class="button primary" href="{% url 'accounts:profile' %}">Go to my profile</a>
+            {% else %}
+                <p>Log in to access your account, or register to get started.</p>
+                <div class="actions">
+                    <a class="button primary" href="{% url 'accounts:login' %}">Log in</a>
+                    <a class="button secondary" href="{% url 'accounts:register' %}">Create an account</a>
+                </div>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My profile | Trackly</title>
+</head>
+<body>
+    <main>
+        <h1>My profile</h1>
+        {% for message in messages %}
+            <p role="status">{{ message }}</p>
+        {% endfor %}
+        <dl>
+            <dt>Username</dt><dd>{{ request.user.username }}</dd>
+            <dt>First name</dt><dd>{{ request.user.first_name|default:'Not provided' }}</dd>
+            <dt>Last name</dt><dd>{{ request.user.last_name|default:'Not provided' }}</dd>
+            <dt>Email</dt><dd>{{ request.user.email|default:'Not provided' }}</dd>
+        </dl>
+        <p><a href="{% url 'accounts:profile_update' %}">Update username</a></p>
+        <p><a href="{% url 'accounts:password_change' %}">Change password</a></p>
+        <p><a href="{% url 'accounts:account_delete' %}">Delete account</a></p>
+        <form method="post" action="{% url 'accounts:logout' %}">
+            {% csrf_token %}
+            <button type="submit">Log out</button>
+        </form>
+    </main>
+</body>
+</html>

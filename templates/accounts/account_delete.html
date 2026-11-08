@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Delete account | Trackly</title>
+</head>
+<body>
+    <main>
+        <h1>Delete account</h1>
+        <p>Are you sure you want to permanently delete your account, {{ request.user.username }}? This cannot be undone.</p>
+        <p>Enter your current password to confirm.</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Permanently delete my account</button>
+        </form>
+        <p><a href="{% url 'accounts:profile' %}">Cancel and return to profile</a></p>
+    </main>
+</body>
+</html>
