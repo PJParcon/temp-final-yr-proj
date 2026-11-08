@@ -16,4 +16,7 @@ def medication_add(request):
         medication.save()
         messages.success(request, 'Medication saved successfully.')
         return redirect('medications:add')
-    return render(request, 'medications/medication_form.html', {'form': form})
+    return render(request, 'medications/medication_form.html', {
+        'form': form,
+        'active_page': 'medications',
+    })

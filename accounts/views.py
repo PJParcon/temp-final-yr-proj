@@ -3,6 +3,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_http_methods
+from django.utils import timezone
 from .forms import AccountDeletionForm, RegistrationForm, UsernameUpdateForm
 
 
@@ -31,7 +32,13 @@ def profile(request):
 
 @login_required
 def dashboard(request):
-    return render(request, 'accounts/dashboard.html', {'active_page': 'dashboard'})
+    medications = request.user.medications.order_by('-created_at', '-pk')
+    return render(request, 'accounts/dashboard.html', {
+        'active_page': 'dashboard',
+        'medications': medications,
+        'medication_count': medications.count(),
+        'today': timezone.localdate(),
+    })
 
 
 @login_required
@@ -41,7 +48,7 @@ def medications_placeholder(request):
 
 @login_required
 def schedule_placeholder(request):
-    return render(request, 'accounts/dashboard.html', {'active_page': 'schedule'})
+    return render(request, 'accounts/schedule.html', {'active_page': 'schedule'})
 
 
 @login_required

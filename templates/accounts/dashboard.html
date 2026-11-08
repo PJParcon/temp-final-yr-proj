@@ -1,1 +1,39 @@
 {% extends 'accounts/dashboard_base.html' %}
+{% block content %}
+    <div class="medication-overview">
+        <h1>Dashboard</h1>
+        <p class="overview-intro">Your medication overview</p>
+        <div class="overview-stats">
+            <div class="overview-stat">
+                <strong>{{ medication_count }}</strong>
+                <span>Medications</span>
+            </div>
+            <div class="overview-stat">
+                <strong>2 / 3</strong>
+                <span>Doses taken <small>(example)</small></span>
+            </div>
+        </div>
+        <div class="overview-heading">
+            <h2>Today's medications</h2>
+            <time datetime="{{ today|date:'Y-m-d' }}">{{ today|date:'l, j M' }}</time>
+        </div>
+        <p class="overview-note">All saved medications are shown. Statuses are example labels.</p>
+        <ul class="overview-medications">
+            {% for medication in medications %}
+                <li class="overview-medication">
+                    <div class="overview-medication-details">
+                        <h3>{{ medication.name }}</h3>
+                        <p>{{ medication.strength }} · {{ medication.dosage }} · {{ medication.get_medication_form_display }}</p>
+                        <p>{{ medication.frequency }}</p>
+                        {% if medication.instructions %}
+                            <p>{{ medication.instructions }}</p>
+                        {% endif %}
+                    </div>
+                    <span class="overview-status">Pending</span>
+                </li>
+            {% empty %}
+                <li class="overview-empty">You haven't added any medications yet. <a href="{% url 'medications:add' %}">Add your first medication</a>.</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

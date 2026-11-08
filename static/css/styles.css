@@ -279,7 +279,9 @@ h1 {
     font-weight: 600;
 }
 
-.profile-field input {
+.profile-field input,
+.medication-page select,
+.medication-page textarea {
     width: 100%;
     min-height: 2.75rem;
     padding: .65rem .8rem;
@@ -288,6 +290,47 @@ h1 {
     background: #ecfbf6;
     color: #212b32;
     font: inherit;
+}
+
+.medication-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1rem;
+}
+
+.medication-field-wide {
+    grid-column: 1 / -1;
+}
+
+.medication-page textarea {
+    display: block;
+    resize: vertical;
+}
+
+.medication-page input:focus,
+.medication-page select:focus,
+.medication-page textarea:focus {
+    outline: none;
+    border-color: #73e6c2;
+    box-shadow: 0 0 0 1px #73e6c2;
+}
+
+.medication-page .errorlist {
+    padding-left: 1.25rem;
+    color: #9c2424;
+}
+
+.medication-page [role="status"] {
+    padding: .75rem 1rem;
+    border-left: 3px solid #006152;
+    background: #ecfbf6;
+    color: #02594c;
+}
+
+@media (max-width: 30rem) {
+    .medication-fields {
+        grid-template-columns: 1fr;
+    }
 }
 
 .profile-actions {
@@ -367,6 +410,115 @@ h1 {
         grid-template-columns: 1fr;
         gap: 0;
     }
+}
+
+.medication-overview {
+    max-width: 64rem;
+    padding: clamp(1.25rem, 4vw, 3rem);
+}
+
+.medication-overview h1 {
+    margin-bottom: .4rem;
+    color: #02594c;
+    font-size: 1.75rem;
+}
+
+.overview-intro,
+.overview-note {
+    margin: 0 0 1.5rem;
+    color: #52645e;
+    font-size: .875rem;
+}
+
+.overview-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.overview-stat {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+}
+
+.overview-stat strong {
+    color: #006152;
+    font-size: 1.75rem;
+}
+
+.overview-stat span {
+    font-size: .875rem;
+}
+
+.overview-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .75rem;
+    margin-bottom: .75rem;
+}
+
+.overview-heading h2 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.overview-heading time,
+.overview-status {
+    padding: .25rem .65rem;
+    border-radius: 1rem;
+    background: #ecfbf6;
+    color: #02594c;
+    font-size: .8rem;
+}
+
+.overview-medications {
+    margin: 0;
+    padding: 0 1rem;
+    border: 1px solid #d5e4e1;
+    border-radius: .75rem;
+    list-style: none;
+}
+
+.overview-medication {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1.25rem 0;
+}
+
+.overview-medication + .overview-medication {
+    border-top: 1px solid #d5e4e1;
+}
+
+.overview-medication-details {
+    min-width: 0;
+    flex: 1;
+    overflow-wrap: anywhere;
+}
+
+.overview-medication h3 {
+    margin: 0 0 .25rem;
+    font-size: 1rem;
+}
+
+.overview-medication p {
+    margin: .2rem 0 0;
+    color: #52645e;
+    font-size: .875rem;
+}
+
+.overview-empty {
+    padding: 1.25rem 0;
+}
+
+.overview-empty a {
+    color: #006152;
 }
 
 .dashboard-skip {

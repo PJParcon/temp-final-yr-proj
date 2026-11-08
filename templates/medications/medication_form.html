@@ -1,22 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Add medication | Trackly</title>
-</head>
-<body>
-    <main>
-        <h1>Add Medication Manually</h1>
+{% extends 'accounts/dashboard_base.html' %}
+{% block title %}Add medication{% endblock %}
+{% block content_label %}Medications{% endblock %}
+{% block content %}
+    <div class="dashboard-profile medication-page">
+        <h1>Add Medication</h1>
+        <p class="profile-intro">Enter the details from your prescription.</p>
         {% for message in messages %}
             <p role="status">{{ message }}</p>
         {% endfor %}
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            {{ form.non_field_errors }}
+            <div class="medication-fields">
+                {% for field in form %}
+                    <div class="profile-field{% if field.name == 'name' or field.name == 'instructions' %} medication-field-wide{% endif %}">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {{ field.errors }}
+                    </div>
+                {% endfor %}
+            </div>
             <button type="submit">Save Medication</button>
         </form>
-        <p><a href="{% url 'accounts:dashboard' %}">Back to dashboard</a></p>
-    </main>
-</body>
-</html>
+    </div>
+{% endblock %}
